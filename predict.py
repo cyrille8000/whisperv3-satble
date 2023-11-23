@@ -1,19 +1,14 @@
 from cog import BasePredictor, Path, Input
+import stable_whisper
 import torch
 
 class Predictor(BasePredictor):
     def setup(self):
-        """Load the model into memory to make running multiple predictions efficient"""
-        # Déterminer le dispositif (GPU si disponible, sinon CPU)
-        self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-
-        # Charger le modèle
-        self.model = torch.load("base.pt", map_location=self.device)
-
-        # Mettre le modèle en mode évaluation
-        self.model.eval()
+        """Setup method can be used for initial configurations if needed."""
+        pass
 
     def predict(self,
+                size: str = Input(description="Model size: 'base' or 'large'", default='base'),
                 audio_file: Path = Input(description="Path to the audio file"),
                 regroup: str = Input(description="Regrouping pattern for transcription", default='sp=.* /。/!/?/？+1'),
                 demucs: bool = Input(description="Use Demucs for denoising", default=True),
@@ -24,19 +19,25 @@ class Predictor(BasePredictor):
                 word_level: bool = Input(description="Word level transcription", default=False)
                 ) -> Path:
         """Run a single prediction on the model"""
-        # Préparation de l'entrée et transfert sur le dispositif approprié (GPU/CPU)
-        # ...
+        
+        # Determine the device to use (GPU if available, otherwise CPU)
+        device = "cuda" if torch.cuda.is_available() else "cpu"
 
-        # Transcription
-        result = self.model.transcribe(audio_file, regroup=regroup, demucs=demucs, vad=vad, mel_first=mel_first)
+        # Load the model based on the 'size' argument
+        model_path = './base.pt' if size == 'base' else './large-v3.pt'
+        self.model = stable_whisper.load_model(model_path, device=device)
 
-        # Output file path
-        output_file = Path("transcription." + output_format)
+        # Perform the transcription
+        # Transcribe the audio file using the model
+        result = self.model.transcribe(str(audio_file), regroup=regroup, demucs=demucs, vad=vad, mel_first=mel_first)
 
-        # Generating transcription file
+        # Generate the output file path
+        output_file_path = audio_file.with_name("transcription." + output_format)
+
+        # Write the transcription to the output file
         if output_format == 'srt':
-            result.to_srt_vtt(str(output_file), segment_level=segment_level, word_level=word_level)
+            result.to_srt_vtt(str(output_file_path), segment_level=segment_level, word_level=word_level)
         elif output_format == 'vtt':
-            result.to_srt_vtt(str(output_file), segment_level=segment_level, word_level=word_level)
+            result.to_srt_vtt(str(output_file_path), segment_level=segment_level, word_level=word_level)
 
-        return output_file
+        return output_file_path
