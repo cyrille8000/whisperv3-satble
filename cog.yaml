@@ -4,10 +4,9 @@
 build:
   python_version: "3.8"
   python_packages:
-    - "torch==1.8.1"
     - "stable-ts==2.13.4"
-    - "demucs==4.0.1"
     - "ffmpeg-python==0.2.0"
+    - "demucs==4.0.1"
   # set to true if your model requires a GPU
   gpu: True
 
