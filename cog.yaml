@@ -14,3 +14,6 @@ build:
 
 # predict.py defines how predictions are run on your model
 predict: "predict.py:Predictor"
+
+# predict.py defines how predictions are run on your model
+image: "r8.im/cyrille800/stable_whisper_v3"
