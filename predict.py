@@ -10,7 +10,7 @@ class Predictor(BasePredictor):
 
     def predict(self,
                 size: str = Input(description="Model size: 'base' or 'large'", default='base'),
-                model_device: str = Input(description="Model device: 'cpu' or 'gpu'", default='cpu'),
+                model_device: str = Input(description="Model device: 'cpu' or 'cuda'", default='cpu'),
                 audio_file: Path = Input(description="Path to the audio file"),
                 regroup: str = Input(description="Regrouping pattern for transcription", default='sp=.* /。/!/?/？+1'),
                 demucs: bool = Input(description="Use Demucs for denoising", default=True),
