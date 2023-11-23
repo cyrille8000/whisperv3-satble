@@ -30,7 +30,19 @@ class Predictor(BasePredictor):
         # Perform the transcription
         result = self.model.transcribe(str(audio_file), regroup=regroup, demucs=demucs, vad=vad, mel_first=mel_first)
 
-        # Convert the result to a JSON string
-        result_json = json.dumps(result, ensure_ascii=False)
+        # Convertir le résultat en un format sérialisable
+        result_dict = self.convert_to_serializable(result)
+
+        # Convertir le dictionnaire en JSON
+        result_json = json.dumps(result_dict, ensure_ascii=False)
 
         return result_json
+
+    def convert_to_serializable(self, result):
+        """Convertit l'objet WhisperResult en un format sérialisable."""
+        # Exemple de conversion (à ajuster en fonction de la structure de WhisperResult)
+        result_dict = {
+            "transcription": result.text,  # ou tout autre attribut pertinent de l'objet result
+            # Ajoutez d'autres champs si nécessaire
+        }
+        return result_dict
