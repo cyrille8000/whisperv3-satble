@@ -7,6 +7,8 @@ build:
     - "stable-ts==2.13.4"
     - "ffmpeg-python==0.2.0"
     - "demucs==4.0.1"
+  run:
+  - apt-get update && apt-get install -y ffmpeg
   # set to true if your model requires a GPU
   gpu: True
 
