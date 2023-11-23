@@ -4,13 +4,14 @@ import torch
 class Predictor(BasePredictor):
     def setup(self):
         """Load the model into memory to make running multiple predictions efficient"""
-        # Charger le modèle avec torch.load
-        self.model = torch.load("base.pt")
+        # Déterminer le dispositif (GPU si disponible, sinon CPU)
+        self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-        # Vérifier et utiliser CUDA si disponible
-        if torch.cuda.is_available():
-            self.model = self.model.cuda(device=0)  # Utiliser le premier GPU
-        self.model.eval()  # Mettre le modèle en mode évaluation
+        # Charger le modèle
+        self.model = torch.load("chemin/vers/base.pt", map_location=self.device)
+
+        # Mettre le modèle en mode évaluation
+        self.model.eval()
 
     def predict(self,
                 audio_file: Path = Input(description="Path to the audio file"),
@@ -23,8 +24,7 @@ class Predictor(BasePredictor):
                 word_level: bool = Input(description="Word level transcription", default=False)
                 ) -> Path:
         """Run a single prediction on the model"""
-        # Préparation de l'entrée et transfert sur le GPU si nécessaire
-        # (À adapter selon la façon dont votre modèle attend les données d'entrée)
+        # Préparation de l'entrée et transfert sur le dispositif approprié (GPU/CPU)
         # ...
 
         # Transcription
