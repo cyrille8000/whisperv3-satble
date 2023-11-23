@@ -4,6 +4,27 @@ import torch
 import json
 import re
 
+def parse_srt_file(filepath):
+    """Parse un fichier SRT et retourne les données dans un format structuré."""
+    with open(filepath, 'r', encoding='utf-8') as file:
+        content = file.read()
+        
+    # Regex pour trouver les temps et les textes
+    pattern = re.compile(r'(\d{2}:\d{2}:\d{2},\d{3}) --> (\d{2}:\d{2}:\d{2},\d{3})\s*(.*?)(?=\n\n|\Z)', re.DOTALL)
+    matches = pattern.findall(content)
+
+    segments = []
+    for start, end, text in matches:
+        segment = {
+            "text": text.strip().replace('\n', ' '),
+            "start": start,
+            "end": end
+        }
+        segments.append(segment)
+
+    return segments
+
+
 class Predictor(BasePredictor):
     def setup(self):
         """Setup method can be used for initial configurations if needed."""
@@ -41,23 +62,3 @@ class Predictor(BasePredictor):
 
 
         return json_data
-
-    def parse_srt_file(filepath):
-        """Parse un fichier SRT et retourne les données dans un format structuré."""
-        with open(filepath, 'r', encoding='utf-8') as file:
-            content = file.read()
-            
-        # Regex pour trouver les temps et les textes
-        pattern = re.compile(r'(\d{2}:\d{2}:\d{2},\d{3}) --> (\d{2}:\d{2}:\d{2},\d{3})\s*(.*?)(?=\n\n|\Z)', re.DOTALL)
-        matches = pattern.findall(content)
-    
-        segments = []
-        for start, end, text in matches:
-            segment = {
-                "text": text.strip().replace('\n', ' '),
-                "start": start,
-                "end": end
-            }
-            segments.append(segment)
-    
-        return segments
