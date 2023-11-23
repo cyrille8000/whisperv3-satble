@@ -55,7 +55,7 @@ class Predictor(BasePredictor):
 
         result.to_srt_vtt('./audio.srt')
         
-        srt_data = parse_srt_file('./audio.srt')
+        srt_data = parse_srt_file('./audio.srt', segment_level=False, word_level=True)
         
         # Convertir en JSON
         json_data = json.dumps({"segmentation": srt_data}, ensure_ascii=False, indent=4)
