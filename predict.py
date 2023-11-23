@@ -8,7 +8,7 @@ class Predictor(BasePredictor):
         self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
         # Charger le modèle
-        self.model = torch.load("chemin/vers/base.pt", map_location=self.device)
+        self.model = torch.load("base.pt", map_location=self.device)
 
         # Mettre le modèle en mode évaluation
         self.model.eval()
