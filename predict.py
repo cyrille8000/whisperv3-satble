@@ -1,10 +1,16 @@
 from cog import BasePredictor, Path, Input
-import stable_whisper
+import torch
 
 class Predictor(BasePredictor):
     def setup(self):
         """Load the model into memory to make running multiple predictions efficient"""
-        self.model = stable_whisper.load_model('base')
+        # Charger le modèle avec torch.load
+        self.model = torch.load("base.pt")
+
+        # Vérifier et utiliser CUDA si disponible
+        if torch.cuda.is_available():
+            self.model = self.model.cuda(device=0)  # Utiliser le premier GPU
+        self.model.eval()  # Mettre le modèle en mode évaluation
 
     def predict(self,
                 audio_file: Path = Input(description="Path to the audio file"),
@@ -17,6 +23,10 @@ class Predictor(BasePredictor):
                 word_level: bool = Input(description="Word level transcription", default=False)
                 ) -> Path:
         """Run a single prediction on the model"""
+        # Préparation de l'entrée et transfert sur le GPU si nécessaire
+        # (À adapter selon la façon dont votre modèle attend les données d'entrée)
+        # ...
+
         # Transcription
         result = self.model.transcribe(audio_file, regroup=regroup, demucs=demucs, vad=vad, mel_first=mel_first)
 
