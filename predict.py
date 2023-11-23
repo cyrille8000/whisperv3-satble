@@ -10,6 +10,7 @@ class Predictor(BasePredictor):
 
     def predict(self,
                 size: str = Input(description="Model size: 'base' or 'large'", default='base'),
+                model_device: str = Input(description="Model device: 'cpu' or 'gpu'", default='cpu'),
                 audio_file: Path = Input(description="Path to the audio file"),
                 regroup: str = Input(description="Regrouping pattern for transcription", default='sp=.* /。/!/?/？+1'),
                 demucs: bool = Input(description="Use Demucs for denoising", default=True),
@@ -20,8 +21,10 @@ class Predictor(BasePredictor):
                 ) -> str:
         """Run a single prediction on the model and return results as a JSON string"""
 
+        print("########")
+        print("cuda" if torch.cuda.is_available() else "cpu")
         # Determine the device to use (GPU if available, otherwise CPU)
-        device = "cuda" if torch.cuda.is_available() else "cpu"
+        device = model_device
 
         # Load the model based on the 'size' argument
         model_path = './base.pt' if size == 'base' else './large-v3.pt'
