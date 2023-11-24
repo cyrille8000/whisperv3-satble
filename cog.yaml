@@ -12,7 +12,6 @@ build:
     - "stable-ts==2.13.4"
     - "ffmpeg-python==0.2.0"
     - "demucs==4.0.1"
-    - "more_itertools==8.14.0"
 
   system_packages:
     - "ffmpeg"
