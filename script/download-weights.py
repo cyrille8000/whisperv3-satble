@@ -1,11 +1,9 @@
 import os
 import whisper
 
-print("ouii 1")
 os.makedirs("whisper-cache", exist_ok=True)
 
-print("ouii 2")
-models = whisper.available_models()
+models = ["large"]
 
 print("ouii 3")
 for model in models:
