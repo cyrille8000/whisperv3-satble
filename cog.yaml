@@ -2,19 +2,23 @@
 # Reference: https://github.com/replicate/cog/blob/main/docs/yaml.md
 
 build:
-  python_version: "3.9"
+  gpu: true
+  python_version: "3.8"
+  cuda: "11.7"
   python_packages:
     - "numpy==1.23.5"
-    - "torch==1.13.0"
     - "tqdm==4.64.1"
     - "more-itertools==9.0.0"
     - "stable-ts==2.13.4"
     - "ffmpeg-python==0.2.0"
     - "demucs==4.0.1"
+
+  system_packages:
+    - "ffmpeg"
+    - "libsndfile1"
+
   run:
-  - apt-get update && apt-get install -y ffmpeg
-  # set to true if your model requires a GPU
-  gpu: True
+    - pip install torch==1.13.1+cu117 torchaudio==0.13.1+cu117 -f https://download.pytorch.org/whl/cu117/torch_stable.html
 
 # predict.py defines how predictions are run on your model
 predict: "predict.py:Predictor"
