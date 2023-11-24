@@ -12,6 +12,7 @@ build:
     - "stable-ts==2.13.4"
     - "ffmpeg-python==0.2.0"
     - "demucs==4.0.1"
+    - "more_itertools==8.14.0"
 
   system_packages:
     - "ffmpeg"
@@ -19,6 +20,7 @@ build:
 
   run:
     - pip install torch==1.13.1+cu117 torchaudio==0.13.1+cu117 -f https://download.pytorch.org/whl/cu117/torch_stable.html
+    - pip install git+https://github.com/openai/whisper
 
 # predict.py defines how predictions are run on your model
 predict: "predict.py:Predictor"
