@@ -53,7 +53,7 @@ class Predictor(BasePredictor):
         # Perform the transcription
         result = self.model.transcribe(str(audio_file), regroup=regroup, demucs=demucs, vad=vad, mel_first=mel_first)
 
-        result.to_srt_vtt('./audio.srt', segment_level=False, word_level=True)
+        result.to_srt_vtt('./audio.srt', segment_level=True, word_level=False)
         
         srt_data = parse_srt_file('./audio.srt')
         
