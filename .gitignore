@@ -1,3 +1,2 @@
-venv/
-large-v3.pt
-base.pt
+__pycache__
+.cog
