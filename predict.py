@@ -31,6 +31,11 @@ class Predictor(BasePredictor):
         pass
 
     def predict(self,
+                model_path: str = Input(
+                    default="base",
+                    choices=["tiny", "base", "small", "medium", "large-v1", "large-v2"],
+                    description="Choose a Whisper model.",
+                ),
                 model_device: str = Input(description="Model device: 'cpu' or 'cuda'", default='cpu'),
                 audio_file: Path = Input(description="Path to the audio file"),
                 regroup: str = Input(description="Regrouping pattern for transcription", default='sp=.* /。/!/?/？+1'),
@@ -46,8 +51,7 @@ class Predictor(BasePredictor):
         device = model_device
 
         # Load the model based on the 'size' argument
-        model_path = './large-v2.pt'
-        self.model = stable_whisper.load_model(model_path, device=device)
+        self.model = stable_whisper.load_model(model_path, , download_root="whisper-cache", device=device)
 
         # Perform the transcription
         result = self.model.transcribe(str(audio_file), regroup=regroup, demucs=demucs, vad=vad, mel_first=mel_first)
