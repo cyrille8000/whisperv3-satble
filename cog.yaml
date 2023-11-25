@@ -3,16 +3,15 @@
 
 build:
   gpu: true
-  python_version: "3.8"
-  cuda: "11.6"
+  python_version: "3.9"
   python_packages:
     - "tqdm==4.64.1"
     - "more-itertools==8.14.0"
     - "stable-ts==2.13.4"
     - "ffmpeg-python==0.2.0"
     - "demucs==4.0.1"
-    - "torch==1.12.1"
-    - "torchaudio==0.12.1"
+    - "torch==1.13.0"
+    - "torchaudio==0.13.0"
 
   system_packages:
     - "ffmpeg"
