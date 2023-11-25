@@ -33,7 +33,7 @@ class Predictor(BasePredictor):
     def predict(self,
                 model_path: str = Input(
                     default="base",
-                    choices=["tiny", "base", "small", "medium", "large-v1", "large-v2"],
+                    choices=["base",  "large-v3"],
                     description="Choose a Whisper model.",
                 ),
                 model_device: str = Input(description="Model device: 'cpu' or 'cuda'", default='cpu'),
