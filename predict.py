@@ -51,7 +51,7 @@ class Predictor(BasePredictor):
         device = model_device
 
         # Load the model based on the 'size' argument
-        self.model = stable_whisper.load_model(model_path, , download_root="whisper-cache", device=device)
+        self.model = stable_whisper.load_model(model_path , download_root="whisper-cache", device=device)
 
         # Perform the transcription
         result = self.model.transcribe(str(audio_file), regroup=regroup, demucs=demucs, vad=vad, mel_first=mel_first)
