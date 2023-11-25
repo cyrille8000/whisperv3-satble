@@ -53,22 +53,12 @@ class Predictor(BasePredictor):
 
         # Chemin vers le fichier de modèle téléchargé
         model_path_demucs = 'whisper-cache/955717e8-8726e21a.th'
-        
-        # Initialiser le modèle Demucs (adaptez les paramètres si nécessaire)
-        demucs_model = Demucs(sources=[])
-        
-        # Charger l'état du modèle
-        state_dict = torch.load(model_path_demucs)
-        demucs_model.load_state_dict(state_dict, strict=False)
-        
-        # Mettre le modèle en mode évaluation
-        demucs_model.eval()
                     
         # Load the model based on the 'size' argument
         self.model = stable_whisper.load_model(model_path , download_root="whisper-cache", device=device)
 
         # Perform the transcription
-        result = self.model.transcribe(str(audio_file), regroup=regroup, demucs=demucs_model, vad=vad, mel_first=mel_first)
+        result = self.model.transcribe(str(audio_file), regroup=regroup, demucs=demucs, demucs_options=torch.load(model_path_demucs), vad=vad, mel_first=mel_first)
 
         result.to_srt_vtt('./audio.srt', segment_level=True, word_level=False)
         
