@@ -23,13 +23,11 @@ def download_file(url, destination_folder):
 
 os.makedirs("whisper-cache", exist_ok=True)
 
-# URL of the file to download
-url = "https://dl.fbaipublicfiles.com/demucs/hybrid_transformer/955717e8-8726e21a.th"
-
 # Destination folder
 destination_folder = "whisper-cache"
 
-download_file(url, destination_folder)
+download_file("https://github.com/snakers4/silero-vad/zipball/master", destination_folder)
+download_file("https://dl.fbaipublicfiles.com/demucs/hybrid_transformer/955717e8-8726e21a.th", destination_folder)
 
 models = ["large","base"]
 
