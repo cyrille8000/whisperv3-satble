@@ -6,12 +6,10 @@ build:
   python_version: "3.8"
   cuda: "11.3"
   python_packages:
-    - "numpy==1.22.3"
     - "tqdm==4.64.1"
     - "more-itertools==8.14.0"
     - "stable-ts==2.13.4"
     - "ffmpeg-python==0.2.0"
-    - "demucs==4.0.1"
 
   system_packages:
     - "ffmpeg"
