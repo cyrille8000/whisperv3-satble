@@ -3,6 +3,7 @@ import stable_whisper
 import torch
 import json
 import re
+from demucs.model import Demucs
 
 def parse_srt_file(filepath):
     """Parse un fichier SRT et retourne les données dans un format structuré."""
@@ -50,12 +51,24 @@ class Predictor(BasePredictor):
         # Determine the device to use (GPU if available, otherwise CPU)
         device = model_device
 
+        # Chemin vers le fichier de modèle téléchargé
+        model_path = 'whisper-cache/955717e8-8726e21a.th'
+        
+        # Initialiser le modèle Demucs (adaptez les paramètres si nécessaire)
+        demucs_model = Demucs()
+        
+        # Charger l'état du modèle
+        state_dict = torch.load(model_path)
+        demucs_model.load_state_dict(state_dict)
+        
+        # Mettre le modèle en mode évaluation
+        demucs_model.eval()
                     
         # Load the model based on the 'size' argument
         self.model = stable_whisper.load_model(model_path , download_root="whisper-cache", device=device)
 
         # Perform the transcription
-        result = self.model.transcribe(str(audio_file), regroup=regroup, demucs="whisper-cache/955717e8-8726e21a.th", vad=vad, mel_first=mel_first)
+        result = self.model.transcribe(str(audio_file), regroup=regroup, demucs=demucs_model, vad=vad, mel_first=mel_first)
 
         result.to_srt_vtt('./audio.srt', segment_level=True, word_level=False)
         
