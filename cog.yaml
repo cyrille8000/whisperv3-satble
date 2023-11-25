@@ -4,7 +4,6 @@
 build:
   gpu: true
   python_version: "3.8"
-  cuda: "11.3"
   python_packages:
     - "tqdm==4.64.1"
     - "more-itertools==8.14.0"
@@ -16,9 +15,8 @@ build:
     - "libsndfile1"
 
   run:
-    - pip install torch==1.11.0+cu113 --extra-index-url https://download.pytorch.org/whl/cu113
-    - pip install torchvision==0.12.0+cu113 --extra-index-url https://download.pytorch.org/whl/cu113
-    - pip install torchaudio==0.11.0 --extra-index-url https://download.pytorch.org/whl/cu113
+    - pip install torch==1.11.0
+    - pip install torchaudio==0.11.0
     - pip install git+https://github.com/openai/whisper
 
 # predict.py defines how predictions are run on your model
