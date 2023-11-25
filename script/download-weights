@@ -5,9 +5,8 @@ import whisper
 
 os.makedirs("whisper-cache", exist_ok=True)
 
-models = ["large"]
+models = ["large","base"]
 
-print("ouii 3")
 for model in models:
     print(f"Downloading {model}...")
     whisper._download(whisper._MODELS[model], "whisper-cache", in_memory=False)
