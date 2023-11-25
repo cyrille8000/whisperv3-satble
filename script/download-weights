@@ -26,9 +26,6 @@ os.makedirs("whisper-cache", exist_ok=True)
 # Destination folder
 destination_folder = "whisper-cache"
 
-download_file("https://github.com/snakers4/silero-vad/zipball/master", destination_folder, "master.zip")
-download_file("https://dl.fbaipublicfiles.com/demucs/hybrid_transformer/955717e8-8726e21a.th", destination_folder, "955717e8-8726e21a.th")
-
 models = ["large","base"]
 
 for model in models:
