@@ -50,11 +50,12 @@ class Predictor(BasePredictor):
         # Determine the device to use (GPU if available, otherwise CPU)
         device = model_device
 
+                    
         # Load the model based on the 'size' argument
         self.model = stable_whisper.load_model(model_path , download_root="whisper-cache", device=device)
 
         # Perform the transcription
-        result = self.model.transcribe(str(audio_file), regroup=regroup, demucs=demucs, vad=vad, mel_first=mel_first)
+        result = self.model.transcribe(str(audio_file), regroup=regroup, demucs="whisper-cache/955717e8-8726e21a.th", vad=vad, mel_first=mel_first)
 
         result.to_srt_vtt('./audio.srt', segment_level=True, word_level=False)
         
