@@ -18,7 +18,7 @@ build:
     - "libsndfile1"
 
   run:
-    - pip install torch==1.10.0+cu113 torchaudio==0.10.1+cu113 -f https://download.pytorch.org/whl/cu113/torch_stable.html
+    - pip install torch==1.10.0+cu113 torchaudio==0.10.0+cu113 -f https://download.pytorch.org/whl/cu113/torch_stable.html
     - pip install git+https://github.com/openai/whisper
 
 # predict.py defines how predictions are run on your model
