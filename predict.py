@@ -58,7 +58,7 @@ class Predictor(BasePredictor):
         self.model = stable_whisper.load_model(model_path , download_root="whisper-cache", device=device)
 
         # Perform the transcription
-        result = self.model.transcribe(str(audio_file), regroup=regroup, demucs=demucs, demucs_options=torch.load(model_path_demucs), vad=vad, mel_first=mel_first)
+        result = self.model.transcribe(str(audio_file), regroup=regroup, demucs=demucs, demucs_options=torch.load(model_path_demucs)['state'], vad=vad, mel_first=mel_first)
 
         result.to_srt_vtt('./audio.srt', segment_level=True, word_level=False)
         
