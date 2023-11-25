@@ -4,7 +4,7 @@
 build:
   gpu: true
   python_version: "3.8"
-  cuda: "11.7"
+  cuda: "11.3"
   python_packages:
     - "tqdm==4.64.1"
     - "more-itertools==8.14.0"
