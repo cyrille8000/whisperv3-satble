@@ -12,7 +12,7 @@ build:
     - "ffmpeg-python==0.2.0"
     - "torch==1.11.0"
     - "torchaudio==0.11.0"
-    - "demucs==4.0.1"
+    - "demucs==-4.0.1"
 
   system_packages:
     - "ffmpeg"
