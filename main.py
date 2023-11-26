@@ -1,4 +1,5 @@
 import requests
+import json
 
 url = "http://localhost:5000/predictions"
 
@@ -17,13 +18,16 @@ params = {
     "segment_level": True
 }
 
+# Préparer le corps de la requête
+data = {'input': json.dumps(params)}
+
 # Ouvrir le fichier en mode binaire
 with open(file_path, 'rb') as file:
     # Créer un dictionnaire pour les fichiers
     files = {'audio_file': (file_path, file)}
 
-    # Envoyer la requête POST avec le fichier et les paramètres
-    response = requests.post(url, data=params, files=files)
+    # Envoyer la requête POST avec les données et le fichier
+    response = requests.post(url, data=data, files=files)
 
     # Afficher la réponse du serveur
     print(response.text)
