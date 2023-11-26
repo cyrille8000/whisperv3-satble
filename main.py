@@ -25,3 +25,4 @@ data = {
 
 # Envoyer la requête POST avec les données JSON
 response = requests.post(url, json={'input': data})
+print(response.text)
