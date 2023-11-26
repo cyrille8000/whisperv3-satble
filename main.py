@@ -9,7 +9,7 @@ params = {
         "demucs": True,
         "regroup": "sp=.* /。/!/?/？+1",
         "mel_first": True,
-        "audio_file": (None, 'segment2.wav'),
+        "audio_file": 'segment2.wav',
         "model_path": "large-v3",
         "word_level": False,
         "model_device": "cuda",
@@ -23,5 +23,5 @@ files = {
 }
 
 # Envoyer la requête POST avec les paramètres et le fichier
-response = requests.post(url, json=params, files=files)
+response = requests.post(url, json=params)
 print(response.text)
