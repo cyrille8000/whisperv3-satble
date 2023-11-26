@@ -1,11 +1,9 @@
 import stable_whisper
 import json
 import re
-from flask import Flask
-app = Flask(__name__)
 
 # Determine the device to use (GPU if available, otherwise CPU)
-device = "cuda"
+device = "cou"
 
 # Load the model based on the 'size' argument
 model = stable_whisper.load_model("whisper-cache/large-v3.pt" , device=device)
@@ -30,21 +28,16 @@ def parse_srt_file(filepath):
 
     return segments
 
-@app.route('/')
-def main():
-    
-    # Perform the transcription
-    result = model.transcribe("segment2.wav", regroup='sp=.* /。/!/?/？+1', demucs=True, vad=True, mel_first=True)
-    
-    result.to_srt_vtt('./audio.srt', segment_level=True, word_level=False)
-    
-    srt_data = parse_srt_file('./audio.srt')
-    
-    # Convertir en JSON
-    json_data = json.dumps({"segmentation": srt_data}, ensure_ascii=False, indent=4)
 
-    return json_data
+# Perform the transcription
+result = model.transcribe("segment2.wav", regroup='sp=.* /。/!/?/？+1', demucs=True, vad=True, mel_first=True)
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+result.to_srt_vtt('./audio.srt', segment_level=True, word_level=False)
+
+srt_data = parse_srt_file('./audio.srt')
+
+# Convertir en JSON
+json_data = json.dumps({"segmentation": srt_data}, ensure_ascii=False, indent=4)
+
+
     
