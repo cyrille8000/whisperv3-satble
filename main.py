@@ -24,4 +24,4 @@ files = {
 
 # Envoyer la requête POST avec les paramètres et le fichier
 response = requests.post(url, json=params, files=files)
-print(response)
+print(response.text)
