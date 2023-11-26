@@ -26,10 +26,10 @@ def parse_srt_file(filepath):
 device = "cuda"
 
 # Load the model based on the 'size' argument
-model = stable_whisper.load_model("large-v3" , download_root="whisper-cache", device=device)
+model = stable_whisper.load_model("whisper-cache/large-v3.pt" , device=device)
 
 # Perform the transcription
-result = model.transcribe(str(audio_file), regroup='sp=.* /。/!/?/？+1', demucs=True, vad=True, mel_first=True)
+result = model.transcribe("segment2.wav", regroup='sp=.* /。/!/?/？+1', demucs=True, vad=True, mel_first=True)
 
 result.to_srt_vtt('./audio.srt', segment_level=True, word_level=False)
 
