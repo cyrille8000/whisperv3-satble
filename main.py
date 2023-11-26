@@ -3,7 +3,7 @@ import json
 import re
 
 # Determine the device to use (GPU if available, otherwise CPU)
-device = "cou"
+device = "cpu"
 
 # Load the model based on the 'size' argument
 model = stable_whisper.load_model("whisper-cache/large-v3.pt" , device=device)
