@@ -1,33 +1,41 @@
-import requests
+import stable_whisper
 import json
+import re
 
-url = "http://localhost:5000/predictions"
+def parse_srt_file(filepath):
+    """Parse un fichier SRT et retourne les données dans un format structuré."""
+    with open(filepath, 'r', encoding='utf-8') as file:
+        content = file.read()
+        
+    # Regex pour trouver les temps et les textes
+    pattern = re.compile(r'(\d{2}:\d{2}:\d{2},\d{3}) --> (\d{2}:\d{2}:\d{2},\d{3})\s*(.*?)(?=\n\n|\Z)', re.DOTALL)
+    matches = pattern.findall(content)
 
-# Chemin vers le fichier à envoyer
-file_path = "segment2.wav"
+    segments = []
+    for start, end, text in matches:
+        segment = {
+            "text": text.strip().replace('\n', ' '),
+            "start": start,
+            "end": end
+        }
+        segments.append(segment)
 
-# Paramètres supplémentaires à envoyer avec le fichier
-params = {
-    "vad": True,
-    "demucs": True,
-    "regroup": "sp=.* /。/!/?/？+1",
-    "mel_first": True,
-    "model_path": "large-v3",
-    "word_level": False,
-    "model_device": "cuda",
-    "segment_level": True
-}
+    return segments
 
-# Préparer le corps de la requête
-data = {'input': json.dumps(params)}
+# Determine the device to use (GPU if available, otherwise CPU)
+device = "cuda"
 
-# Ouvrir le fichier en mode binaire
-with open(file_path, 'rb') as file:
-    # Créer un dictionnaire pour les fichiers
-    files = {'audio_file': (file_path, file)}
+# Load the model based on the 'size' argument
+model = stable_whisper.load_model("large-v3" , download_root="whisper-cache", device=device)
 
-    # Envoyer la requête POST avec les données et le fichier
-    response = requests.post(url, data=data, files=files)
+# Perform the transcription
+result = self.model.transcribe(str(audio_file), regroup='sp=.* /。/!/?/？+1', demucs=True, vad=True, mel_first=True)
 
-    # Afficher la réponse du serveur
-    print(response.text)
+result.to_srt_vtt('./audio.srt', segment_level=True, word_level=False)
+
+srt_data = parse_srt_file('./audio.srt')
+
+# Convertir en JSON
+json_data = json.dumps({"segmentation": srt_data}, ensure_ascii=False, indent=4)
+
+print(json_data)
