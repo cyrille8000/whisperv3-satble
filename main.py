@@ -30,7 +30,7 @@ def parse_srt_file(filepath):
 
 
 # Perform the transcription
-result = model.transcribe("segment2.wav", regroup='sp=.* /。/!/?/？+1', demucs=True, vad=True, mel_first=True)
+result = model.transcribe("v1_.wav", regroup='sp=.* /。/!/?/？+1', demucs=True, vad=True, mel_first=True)
 
 result.to_srt_vtt('./audio.srt', segment_level=True, word_level=False)
 
@@ -38,6 +38,8 @@ srt_data = parse_srt_file('./audio.srt')
 
 # Convertir en JSON
 json_data = json.dumps({"segmentation": srt_data}, ensure_ascii=False, indent=4)
+
+print(json_data)
 
 
     
