@@ -29,7 +29,7 @@ device = "cuda"
 model = stable_whisper.load_model("large-v3" , download_root="whisper-cache", device=device)
 
 # Perform the transcription
-result = self.model.transcribe(str(audio_file), regroup='sp=.* /。/!/?/？+1', demucs=True, vad=True, mel_first=True)
+result = model.transcribe(str(audio_file), regroup='sp=.* /。/!/?/？+1', demucs=True, vad=True, mel_first=True)
 
 result.to_srt_vtt('./audio.srt', segment_level=True, word_level=False)
 
