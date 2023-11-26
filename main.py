@@ -2,7 +2,7 @@ import stable_whisper
 import json
 import re
 from flask import Flask
-
+app = Flask(__name__)
 
 # Determine the device to use (GPU if available, otherwise CPU)
 device = "cuda"
@@ -44,8 +44,6 @@ def main():
     json_data = json.dumps({"segmentation": srt_data}, ensure_ascii=False, indent=4)
 
     return json_data
-
-app = Flask(__name__)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
