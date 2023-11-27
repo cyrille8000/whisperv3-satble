@@ -6,7 +6,7 @@ import re
 app = Flask(__name__)
 
 # Initialisez le modèle ici
-device = "cpu"
+device = "cuda"
 model = stable_whisper.load_model("whisper-cache/large-v3.pt", device=device)
 
 def parse_srt_file(srt_content):
